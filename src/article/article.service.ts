@@ -12,13 +12,17 @@ export class ArticleService {
 
   async createArticle(
     createArticleDto: CreateArticleDto,
-  ): Promise<ArticleSchema> {
+  ): Promise<ArticleSchema[]> {
     const createdArticle = new this.articleModel({
       ...createArticleDto,
     });
 
     try {
-      return createdArticle.save();
+      await createdArticle.save();
+
+      const articles = await this.articleModel.find().exec();
+
+      return articles;
     } catch (error) {
       throw new HttpException(
         {
@@ -29,6 +33,7 @@ export class ArticleService {
       );
     }
   }
+
   async getAllArticle(): Promise<ArticleSchema[]> {
     try {
       return this.articleModel.find().exec();

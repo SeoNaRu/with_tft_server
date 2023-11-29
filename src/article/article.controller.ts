@@ -10,7 +10,7 @@ export class ArticleController {
   @Post()
   createPost(
     @Body() createArticleDto: CreateArticleDto,
-  ): Promise<ArticleSchema> {
+  ): Promise<ArticleSchema[]> {
     return this.articleService.createArticle(createArticleDto);
   }
 

@@ -7,6 +7,9 @@ export type ArticleSchema = HydratedDocument<Article>;
 @Schema()
 export class Article {
   @Prop({ type: String, required: true })
+  puuid: string;
+
+  @Prop({ type: String, required: true })
   nickName: string;
 
   @Prop({ type: String, required: true })
