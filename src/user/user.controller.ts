@@ -1,40 +1,20 @@
-import { Controller, Post, Body, Res, Get, HttpStatus } from '@nestjs/common';
-
 import { UserService } from './user.service';
+import { Controller, Post, Body, Get } from '@nestjs/common';
+import { CreateUserDto } from './dto/create-user.dto';
+
 import { UserSchema } from './entity/user.entity';
 
 @Controller('user')
 export class UserController {
-  constructor(private readonly usersService: UserService) {}
+  constructor(private readonly userService: UserService) {}
 
-  @Post('signup')
-  async create(@Res() response, @Body() user: UserSchema): Promise<UserSchema> {
-    const signupResponse = await this.usersService.create(user);
-    try {
-      return response.status(HttpStatus.OK).json({
-        message: 'SignUp completed',
-        signupResponse: signupResponse,
-      });
-    } catch (error) {
-      return response.status(error.status).json(error.response);
-    }
+  @Post()
+  createPost(@Body() createUserDto: CreateUserDto): Promise<UserSchema[]> {
+    return this.userService.SaveUser(createUserDto);
   }
 
-  @Get('login')
-  async login(
-    @Res() response,
-    @Body('userName') userName: string,
-    @Body('userPassword') userPassword: string,
-  ): Promise<UserSchema> {
-    const loginResponse = await this.usersService.login(userName, userPassword);
-
-    try {
-      return response.status(HttpStatus.OK).json({
-        message: 'login completed',
-        loginResponse: loginResponse,
-      });
-    } catch (error) {
-      return response.status(error.status).json(error.response);
-    }
+  @Get()
+  getAllPosts(): Promise<UserSchema[]> {
+    return this.userService.getAllUser();
   }
 }

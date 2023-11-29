@@ -1,4 +1,5 @@
-import { Prop, SchemaFactory, Schema } from '@nestjs/mongoose';
+// src/post/entity/post.entity.ts
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose, { HydratedDocument } from 'mongoose';
 
 export type UserSchema = HydratedDocument<User>;
@@ -6,42 +7,46 @@ export type UserSchema = HydratedDocument<User>;
 @Schema()
 export class User {
   @Prop({ type: String, required: true })
-  password: string;
+  puuid: string;
 
   @Prop({ type: String, required: true })
-  name: string;
+  nickName: string;
 
-  @Prop({ type: Date, default: Date.now, required: true })
-  joinDate: Date;
+  @Prop({ type: String, required: true })
+  lineTag: string;
+
+  @Prop({ type: String, required: true })
+  tier: string;
+
+  @Prop({ type: String, required: true })
+  age: string;
+
+  @Prop({ type: String, required: true })
+  gender: string;
+
+  @Prop({ type: String, required: true })
+  myVoice: string;
+
+  @Prop({ type: String, required: true })
+  playStyle: string;
+
+  @Prop({ type: String, required: true })
+  duoType: string;
+
+  @Prop({ type: String, required: true })
+  playTime: string;
+
+  @Prop({ type: String, required: true })
+  visble: string;
+
+  @Prop({ type: String, required: true })
+  description: string;
 
   @Prop({
-    type: {
-      model: { type: String, required: true },
-      manufactureYear: { type: Number, required: true },
-      plateNumber: { type: String, required: true },
-      photoUrl: { type: String, required: true },
-      isVerified: { type: Boolean, required: true },
-      verificationStatus: {
-        type: String,
-        enum: ['Pending', 'Verified', 'Rejected'],
-        required: true,
-      },
-    },
-  })
-  car: {
-    model: string;
-    manufactureYear: number;
-    plateNumber: string;
-    photoUrl: string;
-    isVerified: boolean;
-    verificationStatus: 'Pending' | 'Verified' | 'Rejected';
-  };
-
-  @Prop([{ type: mongoose.Schema.Types.ObjectId, ref: 'Post' }])
-  posts: mongoose.Schema.Types.ObjectId;
-
-  @Prop([{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }])
-  comments: mongoose.Schema.Types.ObjectId;
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'user',
+  }) // Assuming it's the user's ID who created the post
+  authorId: mongoose.Schema.Types.ObjectId;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

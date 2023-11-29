@@ -1,25 +1,28 @@
-import {
-  HttpException,
-  HttpStatus,
-  Injectable,
-  UnauthorizedException,
-} from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { UserSchema } from './entity/user.entity';
+import { CreateUserDto } from './dto/create-user.dto';
+import { Model } from 'mongoose';
+import { InjectModel } from '@nestjs/mongoose';
 
 @Injectable()
 export class UserService {
-  constructor(@InjectModel('Users') private UsersModule: Model<UserSchema>) {}
+  constructor(@InjectModel('users') private userModel: Model<UserSchema>) {}
 
-  async create(user: UserSchema): Promise<UserSchema> {
-    const signup = await new this.UsersModule(user).save();
+  async SaveUser(createUserDto: CreateUserDto): Promise<UserSchema[]> {
+    const saveUser = new this.userModel({
+      ...createUserDto,
+    });
+
     try {
-      return signup;
+      await saveUser.save();
+
+      const users = await this.userModel.find().exec();
+
+      return users;
     } catch (error) {
       throw new HttpException(
         {
-          message: 'DB에러',
+          message: 'SaveUserDB에러',
           error: error.sqlMessage,
         },
         HttpStatus.FORBIDDEN,
@@ -27,17 +30,9 @@ export class UserService {
     }
   }
 
-  async login(userName: string, userPassword: string): Promise<UserSchema> {
-    const loginUser = await this.UsersModule.findOne({
-      name: userName,
-      password: userPassword,
-    }).exec();
-
+  async getAllUser(): Promise<UserSchema[]> {
     try {
-      if (!loginUser) {
-        throw new UnauthorizedException('Account that does not exist');
-      }
-      return loginUser;
+      return this.userModel.find().exec();
     } catch (error) {
       throw new HttpException(
         {
