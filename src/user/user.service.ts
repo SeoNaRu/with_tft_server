@@ -8,25 +8,48 @@ import { InjectModel } from '@nestjs/mongoose';
 export class UserService {
   constructor(@InjectModel('users') private userModel: Model<UserSchema>) {}
 
-  async SaveUser(createUserDto: CreateUserDto): Promise<UserSchema[]> {
-    const saveUser = new this.userModel({
-      ...createUserDto,
-    });
+  async saveOrUpdateUser(createUserDto: CreateUserDto): Promise<UserSchema[]> {
+    const existingUser = await this.userModel
+      .findOne({ puuid: createUserDto.puuid })
+      .exec();
 
-    try {
-      await saveUser.save();
+    if (existingUser) {
+      // If user with given puuid exists, update the user information
+      try {
+        await this.userModel.updateOne(
+          { puuid: createUserDto.puuid },
+          createUserDto,
+        );
+        const users = await this.userModel.find().exec();
+        return users;
+      } catch (error) {
+        throw new HttpException(
+          {
+            message: 'UpdateUserDB 에러',
+            error: error.message,
+          },
+          HttpStatus.FORBIDDEN,
+        );
+      }
+    } else {
+      // If user with given puuid does not exist, create a new user
+      const saveUser = new this.userModel({
+        ...createUserDto,
+      });
 
-      const users = await this.userModel.find().exec();
-
-      return users;
-    } catch (error) {
-      throw new HttpException(
-        {
-          message: 'SaveUserDB에러',
-          error: error.sqlMessage,
-        },
-        HttpStatus.FORBIDDEN,
-      );
+      try {
+        await saveUser.save();
+        const users = await this.userModel.find().exec();
+        return users;
+      } catch (error) {
+        throw new HttpException(
+          {
+            message: 'SaveUserDB 에러',
+            error: error.message,
+          },
+          HttpStatus.FORBIDDEN,
+        );
+      }
     }
   }
 

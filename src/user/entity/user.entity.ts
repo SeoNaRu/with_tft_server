@@ -37,7 +37,7 @@ export class User {
   playTime: string;
 
   @Prop({ type: String, required: true })
-  visble: string;
+  visible: string;
 
   @Prop({ type: String, required: true })
   description: string;

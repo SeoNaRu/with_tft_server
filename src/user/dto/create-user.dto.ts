@@ -10,6 +10,6 @@ export class CreateUserDto {
   readonly playStyle: string;
   readonly duoType: string;
   readonly playTime: string;
-  readonly visble: string;
+  readonly visible: string;
   readonly description: string;
 }

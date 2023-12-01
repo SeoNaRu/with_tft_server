@@ -10,7 +10,7 @@ export class UserController {
 
   @Post()
   createPost(@Body() createUserDto: CreateUserDto): Promise<UserSchema[]> {
-    return this.userService.SaveUser(createUserDto);
+    return this.userService.saveOrUpdateUser(createUserDto);
   }
 
   @Get()
