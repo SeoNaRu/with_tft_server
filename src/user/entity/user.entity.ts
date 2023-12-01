@@ -42,6 +42,9 @@ export class User {
   @Prop({ type: String, required: true })
   description: string;
 
+  @Prop({ type: Date, default: Date.now })
+  updatedAt: Date;
+
   @Prop({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'user',

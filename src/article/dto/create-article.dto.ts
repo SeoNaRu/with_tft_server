@@ -7,4 +7,5 @@ export class CreateArticleDto {
   readonly gameType: string;
   readonly vocie: string;
   readonly personel: string;
+  updatedAt: Date;
 }

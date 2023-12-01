@@ -12,4 +12,5 @@ export class CreateUserDto {
   readonly playTime: string;
   readonly visible: string;
   readonly description: string;
+  updatedAt: Date;
 }

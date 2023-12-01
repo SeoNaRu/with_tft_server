@@ -27,6 +27,9 @@ export class Article {
   @Prop({ type: String, required: true })
   personel: string;
 
+  @Prop({ type: Date, default: Date.now }) // 업데이트 일자를 저장하는 필드
+  updatedAt: Date;
+
   @Prop({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'articles',

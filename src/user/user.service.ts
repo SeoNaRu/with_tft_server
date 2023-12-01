@@ -14,13 +14,17 @@ export class UserService {
       .exec();
 
     if (existingUser) {
-      // If user with given puuid exists, update the user information
       try {
+        createUserDto.updatedAt = new Date();
         await this.userModel.updateOne(
           { puuid: createUserDto.puuid },
-          createUserDto,
+          { ...createUserDto, updatedAt: createUserDto.updatedAt },
         );
-        const users = await this.userModel.find().exec();
+
+        const users = await this.userModel
+          .find()
+          .sort({ updatedAt: -1 })
+          .exec();
         return users;
       } catch (error) {
         throw new HttpException(
@@ -32,14 +36,16 @@ export class UserService {
         );
       }
     } else {
-      // If user with given puuid does not exist, create a new user
       const saveUser = new this.userModel({
         ...createUserDto,
       });
 
       try {
         await saveUser.save();
-        const users = await this.userModel.find().exec();
+        const users = await this.userModel
+          .find()
+          .sort({ updatedAt: -1 })
+          .exec();
         return users;
       } catch (error) {
         throw new HttpException(
