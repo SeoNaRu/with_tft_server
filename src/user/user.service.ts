@@ -61,7 +61,10 @@ export class UserService {
 
   async getAllUser(): Promise<UserSchema[]> {
     try {
-      return this.userModel.find({ visible: 'ON' }).exec();
+      return this.userModel
+        .find({ visible: 'ON' })
+        .sort({ updatedAt: -1 })
+        .exec();
     } catch (error) {
       throw new HttpException(
         {
