@@ -5,7 +5,7 @@ export class CreateArticleDto {
   readonly lineTag: string;
   readonly tier: string;
   readonly gameType: string;
-  readonly vocie: string;
+  readonly vocie: boolean;
   readonly personel: string;
   updatedAt: Date;
 }

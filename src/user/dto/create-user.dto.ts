@@ -6,11 +6,11 @@ export class CreateUserDto {
   readonly tier: string;
   readonly age: string;
   readonly gender: string;
-  readonly myVoice: string;
+  readonly myVoice: boolean;
   readonly playStyle: string;
   readonly duoType: string;
   readonly playTime: string;
-  readonly visible: string;
+  readonly visible: boolean;
   readonly description: string;
   updatedAt: Date;
 }

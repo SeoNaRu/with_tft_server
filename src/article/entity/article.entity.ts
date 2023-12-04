@@ -21,8 +21,8 @@ export class Article {
   @Prop({ type: String, required: true })
   gameType: string;
 
-  @Prop({ type: String, required: true })
-  vocie: string;
+  @Prop({ type: Boolean, required: true })
+  vocie: boolean;
 
   @Prop({ type: String, required: true })
   personel: string;

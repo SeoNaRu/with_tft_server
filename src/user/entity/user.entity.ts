@@ -24,8 +24,8 @@ export class User {
   @Prop({ type: String, required: true })
   gender: string;
 
-  @Prop({ type: String, required: true })
-  myVoice: string;
+  @Prop({ type: Boolean, required: true })
+  myVoice: boolean;
 
   @Prop({ type: String, required: true })
   playStyle: string;
@@ -36,8 +36,8 @@ export class User {
   @Prop({ type: String, required: true })
   playTime: string;
 
-  @Prop({ type: String, required: true })
-  visible: string;
+  @Prop({ type: Boolean, required: true })
+  visible: boolean;
 
   @Prop({ type: String, required: true })
   description: string;

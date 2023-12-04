@@ -22,7 +22,7 @@ export class UserService {
         );
 
         const users = await this.userModel
-          .find({ visible: 'ON' })
+          .find({ visible: true })
           .sort({ updatedAt: -1 })
           .exec();
         return users;
@@ -43,7 +43,7 @@ export class UserService {
       try {
         await saveUser.save();
         const users = await this.userModel
-          .find({ visible: 'ON' })
+          .find({ visible: true })
           .sort({ updatedAt: -1 })
           .exec();
         return users;
@@ -62,7 +62,7 @@ export class UserService {
   async getAllUser(): Promise<UserSchema[]> {
     try {
       return this.userModel
-        .find({ visible: 'ON' })
+        .find({ visible: true })
         .sort({ updatedAt: -1 })
         .exec();
     } catch (error) {
