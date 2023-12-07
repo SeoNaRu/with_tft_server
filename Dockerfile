@@ -16,8 +16,8 @@ RUN npm install
 # 프로젝트를 빌드
 RUN npm run build
 
-# 프로젝트에서 5000번 포트를 사용한다는 의미
-EXPOSE 5000
+# 프로젝트에서 8080번 포트를 사용한다는 의미
+EXPOSE 8080
 
 # 빌드 이후에 dist라는 폴더에 main.js가 생성되므로 해당 파일을 실행
 CMD [ "node", "dist/main.js" ]
