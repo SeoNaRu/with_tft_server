@@ -6,10 +6,9 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
-    "dev": "next dev -p 3060",
-    "build": "ANALYZE=true NODE_ENV=production next build",
+    "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
-    "start": "NODE_ENV=production next start -p 80",
+    "start": "nest start",
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
