@@ -3,7 +3,7 @@ version: '3.9'
 services:
   backend:
     build: ./
-    container_name: nestjs_api
+    container_name: with_tft_server_backend
     ports:
       - '8080:8080'
 
